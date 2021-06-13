@@ -1,4 +1,5 @@
 package src;
+
 import java.util.Scanner;
 
 public class Memorabilia {
@@ -23,8 +24,13 @@ public class Memorabilia {
     String categoria[] = new String[NUM_PELICULAS];
     int[] añoP = new int[NUM_PELICULAS];
     boolean estadoDis[] = new boolean[NUM_PELICULAS];
+    //arreglos para el prestamo
+    int diasPresta[] = new int[NUM_PELICULAS];
+    int idPeliculaP[] = new int[NUM_PELICULAS];
+    int idClienteP[] = new int[NUM_PELICULAS];
 
     public Memorabilia() {
+        iniciarDias();
         menuPrincipal();
 
     }
@@ -53,7 +59,7 @@ public class Memorabilia {
 
             switch (op) {
                 case (1):
-
+                    prestamoPeli();
                     break;
                 case (2):
 
@@ -65,7 +71,7 @@ public class Memorabilia {
                     ingresoPelis();
                     break;
                 case (5):
-                    
+
                     break;
                 case (6):
                     ingresoClientes();
@@ -174,11 +180,14 @@ public class Memorabilia {
 
     }
 
+    /**
+     * Agraga clientes al arreglo
+     */
     public void ingresoClientes() {
         int op = 2;
         int idAux = 0;
         while (nombreClientes[NUM_CLIENTES - 1] == null && op == 2) {
-            System.out.print("\ningrese el ID de la Persona que desea registrar");
+            System.out.print("\ningrese el ID de la Persona que desea registrar ");
             idAux = entrada.nextInt();
             if (validez(idAux, idCliente)) {
                 for (int i = 0; i < NUM_CLIENTES; i++) {
@@ -206,15 +215,98 @@ public class Memorabilia {
         }
 
     }
-    
-    public void datosCliente(int pos){
-        estadoPres[pos]=false;
+
+    /**
+     *
+     * @param pos posicion donde agregar los datos en el arreglo
+     */
+    public void datosCliente(int pos) {
+        estadoPres[pos] = false;
         System.out.print("\nIngrese el nombre del Cliente ");
         nombrePeliculas[pos] = entrada.nextLine();
-        entrada.next();
-        System.out.println("\nIngrese el numero de telefono");
+        System.out.print("\nIngrese el numero de telefono ");
         telefonoC[pos] = entrada.nextInt();
+        entrada.next();
     }
-    
+
+    public void prestamoPeli() {
+        int cantDip = 0;
+        System.out.println("***Peliculas Disponibles***\n");
+        System.out.println("____________________________________________________");
+        System.out.println("|id      | nombre      | año     | categoria        |");
+        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (nombrePeliculas[i] != null && estadoDis[i] == false) {
+                System.out.println("|" + idPelicula[i] + "  " + nombrePeliculas[i] + " " + añoP[i] + "  " + categoria[i] + " |\n");
+                cantDip++;
+            }
+        }
+        llenarDatosPres(cantDip);
+        imprimirTablaPres();
+
+    }
+
+    public void llenarDatosPres(int cantDip) {
+        int idC = 0, idP = 0, pos = 0;
+        boolean idEx = true, idPx = true;
+        if (cantDip != 0) {
+            do {
+                System.out.println("-El cliente solo puede prestar una pelicula\nPor favor ingreasar dastos correctos o existentes\n");
+                System.out.println("ingrese el id del cliente que desea alquilar la pelicula ");
+                idC = entrada.nextInt();
+                for (int i = 0; i < NUM_PELICULAS; i++) {
+                    if (idCliente[i] == idP && estadoPres[i] == false) {
+                        idClienteP[i] = idC;
+                        estadoPres[i] = true;
+                        idPx = false;
+                        break;
+
+                    }
+                }
+                System.out.println("Ingrese el id de la pelicula que desea alquilar ");
+                idP = entrada.nextInt();
+                for (int i = 0; i < NUM_PELICULAS; i++) {
+                    if (idPelicula[i] == idP && estadoDis[i] == false) {
+                        idPeliculaP[i] = idP;
+                        estadoDis[i] = true;
+                        pos = i;
+                        idEx = false;
+                        break;
+
+                    }
+                }
+
+                if (idPx && idEx) {
+                    System.out.println("Datos incorrectos");
+                } else {
+                    System.out.print("Ingrese el los dias de prestamo");
+                    diasPresta[pos] += entrada.nextInt();
+                }
+
+            } while (idEx && idPx);
+            System.out.println("\n\n***Prestamo Exitoso***\n");
+
+        } else {
+            System.out.println("No cuenta con peliculas ");
+        }
+
+    }
+
+    public void imprimirTablaPres() {
+        System.out.println("\n***peliculas prestadas***\n");
+        System.out.println("_________________________________________________________");
+        System.out.println("|id  | nombre    | año   | categoria  | Dias  |");
+        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ ");
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (nombrePeliculas[i] != null && estadoDis[i] == true) {
+                System.out.println("|" + idPelicula[i] + "  " + nombrePeliculas[i] + " " + añoP[i] + "  " + categoria[i] + " " + diasPresta [i]+ "  |\n");
+            }
+        }
+    }
+    public void iniciarDias(){
+        for (int i = 0; añoP.length < 10; i++) {
+           añoP[i]=0;
+        }
+    }
 
 }
