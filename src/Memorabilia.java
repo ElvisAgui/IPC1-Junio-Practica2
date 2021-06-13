@@ -1,5 +1,4 @@
-
-
+package src;
 import java.util.Scanner;
 
 public class Memorabilia {
@@ -66,10 +65,10 @@ public class Memorabilia {
                     ingresoPelis();
                     break;
                 case (5):
-
+                    
                     break;
                 case (6):
-
+                    ingresoClientes();
                     break;
                 case (7):
 
@@ -91,7 +90,7 @@ public class Memorabilia {
         while (nombrePeliculas[NUM_PELICULAS - 1] == null && op == 2) {
             System.out.print("\ningrese el ID de la pelicula ");
             idAux = entrada.nextInt();
-            if (validez(idAux)) {
+            if (validez(idAux, idPelicula)) {
                 for (int i = 0; i < NUM_PELICULAS; i++) {
                     if (nombrePeliculas[i] == null) {
                         idPelicula[i] = idAux;
@@ -105,7 +104,7 @@ public class Memorabilia {
                 System.out.println("ERROR, El ID de la pelicula ya existe\n");
 
             }
-            System.out.println("desea agreagar otra pelicula");
+            System.out.println("***desea agreagar otra pelicula***");
             System.out.println("1-Regresar al menu principal");
             System.out.println("2-Agregar otra pelicula");
             System.out.print("Digite la opcion ");
@@ -124,10 +123,10 @@ public class Memorabilia {
      * @param idE es el id que recive
      * @return boolean falso si ya existe un id true si no hay id
      */
-    public boolean validez(int idE) {
+    public boolean validez(int idE, int arreglo[]) {
         boolean vald = true;
-        for (int i = 0; i < NUM_PELICULAS; i++) {
-            if (idPelicula[i] == idE) {
+        for (int i = 0; i < arreglo.length; i++) {
+            if (arreglo[i] == idE) {
                 vald = false;
                 break;
             }
@@ -174,5 +173,48 @@ public class Memorabilia {
         }
 
     }
+
+    public void ingresoClientes() {
+        int op = 2;
+        int idAux = 0;
+        while (nombreClientes[NUM_CLIENTES - 1] == null && op == 2) {
+            System.out.print("\ningrese el ID de la Persona que desea registrar");
+            idAux = entrada.nextInt();
+            if (validez(idAux, idCliente)) {
+                for (int i = 0; i < NUM_CLIENTES; i++) {
+                    if (nombreClientes[i] == null) {
+                        idCliente[i] = idAux;
+                        datosCliente(i);
+                        break;
+                    }
+
+                }
+
+            } else {
+                System.out.println("ERROR, El ID del Cliente ya existe\n");
+
+            }
+            System.out.println("***desea agreagar otro clientre***");
+            System.out.println("1-Regresar al menu principal");
+            System.out.println("2-Agregar otro clientre");
+            System.out.print("Digite la opcion ");
+            op = entrada.nextInt();
+
+        }
+        if (nombreClientes[NUM_CLIENTES - 1] != null) {
+            System.out.println("\nYa no cuenta con espacios para agregar mas clientes!!!, SORRY\n");
+        }
+
+    }
+    
+    public void datosCliente(int pos){
+        estadoPres[pos]=false;
+        System.out.print("\nIngrese el nombre del Cliente ");
+        nombrePeliculas[pos] = entrada.nextLine();
+        entrada.next();
+        System.out.println("\nIngrese el numero de telefono");
+        telefonoC[pos] = entrada.nextInt();
+    }
+    
 
 }
