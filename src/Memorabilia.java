@@ -1,10 +1,11 @@
 
+
 import java.util.Scanner;
 
 public class Memorabilia {
 
     public static void main(String[] args) {
-
+        Memorabilia memoria = new Memorabilia();
     }
     Scanner entrada = new Scanner(System.in);
     /**
@@ -62,7 +63,7 @@ public class Memorabilia {
 
                     break;
                 case (4):
-
+                    ingresoPelis();
                     break;
                 case (5):
 
@@ -74,11 +75,6 @@ public class Memorabilia {
 
                     break;
                 case (8):
-
-                    break;
-                case (9):
-
-                    break;
 
             }
 
@@ -92,8 +88,8 @@ public class Memorabilia {
     public void ingresoPelis() {
         int idAux = 0;
         int op = 2;
-        while (nombrePeliculas[NUM_PELICULAS - 1] != null && op == 2) {
-            System.out.print("\n ingrese el ID de la pelicula ");
+        while (nombrePeliculas[NUM_PELICULAS - 1] == null && op == 2) {
+            System.out.print("\ningrese el ID de la pelicula ");
             idAux = entrada.nextInt();
             if (validez(idAux)) {
                 for (int i = 0; i < NUM_PELICULAS; i++) {
@@ -116,7 +112,7 @@ public class Memorabilia {
             op = entrada.nextInt();
 
         }
-        if (nombrePeliculas[NUM_PELICULAS - 1] == null) {
+        if (nombrePeliculas[NUM_PELICULAS - 1] != null) {
             System.out.println("\nYa no cuenta con espacios para mas Peliculas!!!, SORRY\n");
         }
 
@@ -151,6 +147,7 @@ public class Memorabilia {
         estadoDis[pos] = false;
         System.out.print("\nIgrese el nombre de la pelicula ");
         nombrePeliculas[pos] = entrada.nextLine();
+        entrada.next();
         System.out.print("\nIngrese el año de la Pelicual ");
         añoP[pos] = entrada.nextInt();
         System.out.println("\nIngrese la categoria de la Pelicual ");
