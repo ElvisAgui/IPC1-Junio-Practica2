@@ -455,10 +455,6 @@ public class Memorabilia {
                 }
                 arregoAux[pos] = aux;
             }
-
-            for (int i = 0; i < arregoAux.length; i++) {
-                System.out.println(arregoAux[i]);
-            }
             for (int i = 0; i < arregoAux.length; i++) {
                 nombrePeliculas[i] = arregoAux[i];
                 añoP[i] = arregloAño[i];
