@@ -66,7 +66,7 @@ public class Memorabilia {
                     devolucionPeli();
                     break;
                 case (3):
-                        
+                     mostrasPelicuals();
                     break;
                 case (4):
                     ingresoPelis();
@@ -324,7 +324,10 @@ public class Memorabilia {
         cantDip=imprimirTablaDis();
 
     }
-
+    /**
+     * imprime la tabla de peliculas disponibles
+     * @return 
+     */
     public int imprimirTablaDis() {
         String nombreC = "";
         int cantDisp = 0;
@@ -378,7 +381,9 @@ public class Memorabilia {
         }
 
     }
-    
+    /**
+     * muestra el listado de peliculas registradas y sus datos
+     */
     public void mostrasPelicuals(){
         System.out.println("\n****Datos de las Peliculas Registradas*****\n ");
         System.out.println("_____________________________________");
@@ -390,5 +395,24 @@ public class Memorabilia {
             }
             
         }
+        System.out.println("\n");
+    }
+    /**
+     * imprime los datos de los clientes
+     */
+    public void mostraClientes(){
+       System.out.println("\n****Datos de las Peliculas Registradas*****\n ");
+        System.out.println("____________________________");
+        System.out.println("|id  | Nombre   | Telefono  |");
+        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯"); 
+        for (int i = 0; i < nombreClientes.length; i++) {
+            if (nombreClientes[i] != null) {
+                System.out.println("|"+idCliente[i]+" |"+nombreClientes[i]+" |"+telefonoC[i]+" |");
+                
+            }
+            
+        }
+        
+        
     }
 }
