@@ -66,19 +66,19 @@ public class Memorabilia {
                     devolucionPeli();
                     break;
                 case (3):
-                     mostrasPelicuals();
+                    mostrasPelicuals();
                     break;
                 case (4):
                     ingresoPelis();
                     break;
                 case (5):
-
+                    ordenamientoPelis();
                     break;
                 case (6):
                     ingresoClientes();
                     break;
                 case (7):
-
+                    Reportes();
                     break;
                 case (8):
 
@@ -299,13 +299,13 @@ public class Memorabilia {
         for (int i = 0; i < NUM_PELICULAS; i++) {
             if (nombrePeliculas[i] != null && estadoDis[i] == true) {
                 for (int j = 0; i < idPeliculaP.length; j++) {
-                    if (idClienteP[i]== idCliente[j]) {
+                    if (idClienteP[i] == idCliente[j]) {
                         nombreC = nombreClientes[j];
                         break;
                     }
-                   
+
                 }
-                System.out.println("|" + idPelicula[i] + "  " + nombrePeliculas[i] + " " + añoP[i] + "  " + categoria[i] + " " + diasPresta[i] +"  "+nombreC +"  |\n");
+                System.out.println("|" + idPelicula[i] + "  " + nombrePeliculas[i] + " " + añoP[i] + "  " + categoria[i] + " " + diasPresta[i] + "  " + nombreC + "  |\n");
                 cantDisp++;
             }
         }
@@ -321,12 +321,14 @@ public class Memorabilia {
     public void devolucionPeli() {
         cantpr = imprimirTablaPres();
         llenarDatosDevo(cantpr);
-        cantDip=imprimirTablaDis();
+        cantDip = imprimirTablaDis();
 
     }
+
     /**
      * imprime la tabla de peliculas disponibles
-     * @return 
+     *
+     * @return
      */
     public int imprimirTablaDis() {
         String nombreC = "";
@@ -349,70 +351,232 @@ public class Memorabilia {
         boolean idEx = true, idPx = true;
         if (cantpr != 0) {
             do {
-                
+
                 System.out.print("Ingrese el id de la pelicula");
-                idP= entrada.nextInt();
+                idP = entrada.nextInt();
                 for (int i = 0; i < NUM_PELICULAS; i++) {
-                    if (idPelicula[i] == idP && estadoDis[i] == true){
+                    if (idPelicula[i] == idP && estadoDis[i] == true) {
                         estadoDis[i] = false;
                         idEx = false;
                         break;
                     }
                 }
                 System.out.print("ingrese el id del cliente");
-                idC=entrada.nextInt();
+                idC = entrada.nextInt();
                 for (int i = 0; i < NUM_PELICULAS; i++) {
-                    if (idCliente[i] == idC && estadoPres[i] == true){
+                    if (idCliente[i] == idC && estadoPres[i] == true) {
                         estadoPres[i] = false;
                         idPx = false;
                         break;
                     }
                 }
-                
-                
-                
+
                 if (idPx && idEx) {
                     System.out.println("Datos incorrectos");
                 }
             } while (idEx && idPx);
-            
-        }else {
+
+        } else {
             System.out.println("No cuenta con peliculas ");
         }
 
     }
+
     /**
      * muestra el listado de peliculas registradas y sus datos
      */
-    public void mostrasPelicuals(){
+    public void mostrasPelicuals() {
         System.out.println("\n****Datos de las Peliculas Registradas*****\n ");
         System.out.println("_____________________________________");
         System.out.println("|id | Pelicula | año   | categoria  |");
         System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
         for (int i = 0; i < NUM_PELICULAS; i++) {
             if (nombrePeliculas != null) {
-                System.out.println("|"+idPelicula[i]+" |"+nombrePeliculas[i]+" |"+añoP[i]+" |"+categoria[i]+" |");  
+                System.out.println("|" + idPelicula[i] + " |" + nombrePeliculas[i] + " |" + añoP[i] + " |" + categoria[i] + " |");
             }
-            
+
         }
         System.out.println("\n");
     }
+
     /**
      * imprime los datos de los clientes
      */
-    public void mostraClientes(){
-       System.out.println("\n****Datos de las Peliculas Registradas*****\n ");
+    public void mostraClientes() {
+        System.out.println("\n****Datos de las Peliculas Registradas*****\n ");
         System.out.println("____________________________");
         System.out.println("|id  | Nombre   | Telefono  |");
-        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯"); 
+        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
         for (int i = 0; i < nombreClientes.length; i++) {
             if (nombreClientes[i] != null) {
-                System.out.println("|"+idCliente[i]+" |"+nombreClientes[i]+" |"+telefonoC[i]+" |");
+                System.out.println("|" + idCliente[i] + " |" + nombreClientes[i] + " |" + telefonoC[i] + " |");
+
+            }
+
+        }
+
+    }
+
+    public void ordenamientoPelis() {
+        String selecNom = "", categoria = "";
+        int pos = 0;
+        int id = 0, año = 0, iteraciones = 0;
+        boolean dispo;
+
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (nombrePeliculas[i] != null) {
+                iteraciones++;
+            }
+
+        }
+        if (iteraciones > 0) {
+            for (int i = 0; i < iteraciones; i++) {
+                selecNom = nombrePeliculas[i];
+                id = idPelicula[i];
+                categoria = this.categoria[i];
+                dispo = estadoDis[i];
+                año = añoP[i];
+                pos = i;
+                for (int j = 0; j < iteraciones; j++) {
+                    if (selecNom.charAt(0) > nombrePeliculas[j].charAt(0)) {
+                        selecNom = nombrePeliculas[j];
+                        id = idPelicula[j];
+                        categoria = this.categoria[j];
+                        dispo = estadoDis[j];
+                        año = añoP[i];
+                        pos = j;
+                    }
+
+                    nombrePeliculas[pos] = nombrePeliculas[i];
+                    idPelicula[pos] = idPelicula[i];
+                    this.categoria[pos] = this.categoria[i];
+                    estadoPres[pos] = estadoDis[i];
+                    añoP[pos] = añoP[i];
+
+                }
+
+            }
+            System.out.println("\n\n****Orden de forma ascendiente exitoso****\n\n");
+        } else {
+            System.out.println("\n\nNo cuentas con peliculas!!!!\n\n");
+        }
+
+    }
+
+    public void Reportes() {
+        int op = 0;
+        do {
+            System.out.println("\n****Bienvenido a Reportes***\n");
+            System.out.println("1.--cantidad de peliculas por categoria");
+            System.out.println("2.--Peliculas de una categoria en especifico");
+            System.out.println("3.--Reporte de pelicula y cantidad de veces prestada");
+            System.out.println("4.--Reporte de la pelicula mas prestada");
+            System.out.println("5.--Reporete de las pelicula menor prestada");
+            System.out.println("6.--Regresar al Menu principal");
+            System.out.print("digite el numero de la opcion que desee realizar\n");
+            op = entrada.nextInt();
+
+            switch (op) {
+                case 1:
+                    imprimiCantCateg();
+                    break;
+                case 2:
+                    categoriaPelis();
+                    break;
+                case 3:
+                    mostrasPelicuals();
+                    break;
+                case 4:
+                    
+                    break;
+
+            }
+
+        } while (op != 0);
+
+    }
+
+    public void categoriaPelis() {
+        int op = 0;
+        System.out.println("\n--Categorias\n");
+        System.out.println("1. Familiar\n2. Accion\n3. Romance\n4. Terror\n5. Comedia\n");
+        System.out.print("Digite la categoria que desea ver");
+        op = entrada.nextInt();
+        switch (op) {
+            case 1:
+                System.out.println("\n**Familiar**\n");
+                imprimirCategoria("Familiar");
+                break;
+            case 2:
+                System.out.println("\n**Accion**\n");
+                imprimirCategoria("Accion");
+                break;
+            case 3:
+                System.out.println("\n**Romance**\n");
+                imprimirCategoria("Romance");
+                break;
+            case 4:
+                System.out.println("\n**Terror**\n");
+                imprimirCategoria("Terror");
+                break;
+            case 5:
+                System.out.println("\n**Comedia**\n");
+                imprimirCategoria("Comedia");
+                break;
+
+        }
+
+    }
+
+    public void imprimirCategoria(String categori) {
+        System.out.println("_________________________");
+        System.out.println("|id  | Pelicula   | año  |");
+        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (nombrePeliculas[i] != null && categoria[i] == categori) {
+                System.out.println("| " + idPelicula[i] + " |" + nombrePeliculas[i] + " |" + " |" + añoP[i] + " |");
+            }
+        }
+
+    }
+
+    public int cantidPeliCat(String categori) {
+        int cant = 0;
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (nombrePeliculas[i] != null && categoria[i] == categori) {
+                cant++;
+            }
+        }
+        return cant;
+    }
+
+    public void imprimiCantCateg() {
+
+        System.out.println("\n***Cantidad por Categoria***\n");
+        System.out.println("1. Familiar ----> " + cantidPeliCat("Familiar"));
+        System.out.println("2. Accion   ----> " + cantidPeliCat("Accion"));
+        System.out.println("3. Romance  ----> " + cantidPeliCat("Romance"));
+        System.out.println("4. Terror   ----> " + cantidPeliCat("Terror"));
+        System.out.println("5. Comedia  ----> " + cantidPeliCat("Familiar"));
+
+    }
+    
+    public void peliMasPrestada(){
+        int mayor = 0, pos =0;
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (mayor < diasPresta[i]) {
+                mayor = diasPresta[i];
+                pos =i;
+                
+            }
+        }
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (idPeliculaP[i] == idPelicula[pos]) {
+                System.out.println("La Pelicula mas Prestada es " + nombrePeliculas[i]);
                 
             }
             
         }
-        
-        
     }
+
 }
