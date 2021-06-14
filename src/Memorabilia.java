@@ -78,9 +78,11 @@ public class Memorabilia {
                     ingresoClientes();
                     break;
                 case (7):
-                    Reportes();
+                    mostraClientes();
                     break;
                 case (8):
+                    Reportes();
+                    break;
 
             }
 
@@ -223,9 +225,9 @@ public class Memorabilia {
      */
     public void datosCliente(int pos) {
         estadoPres[pos] = false;
-        System.out.print("\nIngrese el nombre del Cliente ");
-        nombrePeliculas[pos] = entrada.next();
-        System.out.print("\nIngrese el numero de telefono ");
+        System.out.print("Ingrese el nombre del Cliente ");
+        nombreClientes[pos] = entrada.next();
+        System.out.print("Ingrese el numero de telefono ");
         telefonoC[pos] = entrada.nextInt();
         entrada.nextLine();
     }
@@ -391,7 +393,7 @@ public class Memorabilia {
         System.out.println("|id | Pelicula | año   | categoria  |");
         System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
         for (int i = 0; i < NUM_PELICULAS; i++) {
-            if (nombrePeliculas != null) {
+            if (nombrePeliculas[i] != null) {
                 System.out.println("|" + idPelicula[i] + " |" + nombrePeliculas[i] + " |" + añoP[i] + " |" + categoria[i] + " |");
             }
 
@@ -403,12 +405,12 @@ public class Memorabilia {
      * imprime los datos de los clientes
      */
     public void mostraClientes() {
-        System.out.println("\n****Datos de las Peliculas Registradas*****\n ");
+        System.out.println("\n****datos Clientes Regristrados*****\n ");
         System.out.println("____________________________");
         System.out.println("|id  | Nombre   | Telefono  |");
         System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
         for (int i = 0; i < nombreClientes.length; i++) {
-            if (nombreClientes[i] != null) {
+            if (nombreClientes[i] != (null)) {
                 System.out.println("|" + idCliente[i] + " |" + nombreClientes[i] + " |" + telefonoC[i] + " |");
 
             }
@@ -418,43 +420,51 @@ public class Memorabilia {
     }
 
     public void ordenamientoPelis() {
-        String selecNom = "", categoria = "";
-        int pos = 0;
-        int id = 0, año = 0, iteraciones = 0;
-        boolean dispo;
-
+        int iteraciones = 0, pos;
+        String aux;
         for (int i = 0; i < NUM_PELICULAS; i++) {
             if (nombrePeliculas[i] != null) {
                 iteraciones++;
             }
-
         }
         if (iteraciones > 0) {
-            for (int i = 0; i < iteraciones; i++) {
-                selecNom = nombrePeliculas[i];
-                id = idPelicula[i];
-                categoria = this.categoria[i];
-                dispo = estadoDis[i];
-                año = añoP[i];
-                pos = i;
-                for (int j = 0; j < iteraciones; j++) {
-                    if (selecNom.charAt(0) > nombrePeliculas[j].charAt(0)) {
-                        selecNom = nombrePeliculas[j];
-                        id = idPelicula[j];
-                        categoria = this.categoria[j];
-                        dispo = estadoDis[j];
-                        año = añoP[i];
-                        pos = j;
-                    }
+            String arregoAux[] = new String[iteraciones];
+            int arregloid[] = new int[iteraciones];
+            int arregloAño[] = new int[iteraciones];
+            String arregloCat[] = new String[iteraciones];
+            boolean arregloDsi[] = new boolean[iteraciones];
+            for (int i = 0; i < arregoAux.length; i++) {
+                arregoAux[i] = nombrePeliculas[i];
+                arregloAño[i] = añoP[i];
+                arregloCat[i] = categoria[i];
+                arregloDsi[i] = estadoDis[i];
+                arregloid[i] = idPelicula[i];
+            }
 
-                    nombrePeliculas[pos] = nombrePeliculas[i];
-                    idPelicula[pos] = idPelicula[i];
-                    this.categoria[pos] = this.categoria[i];
-                    estadoPres[pos] = estadoDis[i];
-                    añoP[pos] = añoP[i];
+            for (int i = 0; i < arregoAux.length; i++) {
+                pos = i;
+                aux = arregoAux[i];
+                while (pos > 0 && arregoAux[i - 1].charAt(0) > aux.charAt(0)) {
+                    arregoAux[pos] = arregoAux[pos - 1];
+                    arregloAño[pos] = añoP[pos - 1];
+                    arregloCat[pos] = categoria[pos - 1];
+                    arregloDsi[pos] = estadoDis[pos - 1];
+                    arregloid[pos] = idPelicula[pos - 1];
+                    pos--;
 
                 }
+                arregoAux[pos] = aux;
+            }
 
+            for (int i = 0; i < arregoAux.length; i++) {
+                System.out.println(arregoAux[i]);
+            }
+            for (int i = 0; i < arregoAux.length; i++) {
+                nombrePeliculas[i] = arregoAux[i];
+                añoP[i] = arregloAño[i];
+                categoria[i] = arregloCat[i];
+                estadoDis[i] = arregloDsi[i];
+                idPelicula[i] = arregloid[i];
             }
             System.out.println("\n\n****Orden de forma ascendiente exitoso****\n\n");
         } else {
@@ -495,7 +505,7 @@ public class Memorabilia {
 
             }
 
-        } while (op != 0);
+        } while (op != 6);
 
     }
 
