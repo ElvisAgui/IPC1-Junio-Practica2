@@ -487,7 +487,10 @@ public class Memorabilia {
                     mostrasPelicuals();
                     break;
                 case 4:
-                    
+                    peliMasPrestada();
+                    break;
+                case 5:
+                    peliMenosPres();
                     break;
 
             }
@@ -560,22 +563,40 @@ public class Memorabilia {
         System.out.println("5. Comedia  ----> " + cantidPeliCat("Familiar"));
 
     }
-    
-    public void peliMasPrestada(){
-        int mayor = 0, pos =0;
+
+    public void peliMasPrestada() {
+        int mayor = 0, pos = 0;
         for (int i = 0; i < NUM_PELICULAS; i++) {
             if (mayor < diasPresta[i]) {
                 mayor = diasPresta[i];
-                pos =i;
-                
+                pos = i;
+
             }
         }
         for (int i = 0; i < NUM_PELICULAS; i++) {
             if (idPeliculaP[i] == idPelicula[pos]) {
                 System.out.println("La Pelicula mas Prestada es " + nombrePeliculas[i]);
-                
+
             }
-            
+
+        }
+    }
+
+    public void peliMenosPres() {
+        int menor = diasPresta[0], pos = 0;
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (menor > diasPresta[i]) {
+                menor = diasPresta[i];
+                pos = i;
+
+            }
+        }
+        for (int i = 0; i < NUM_PELICULAS; i++) {
+            if (idPeliculaP[i] == idPelicula[pos]) {
+                System.out.println("La Pelicula menos Prestada es " + nombrePeliculas[i]);
+
+            }
+
         }
     }
 
